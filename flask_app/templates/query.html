@@ -1,0 +1,42 @@
+{% extends "header.html" %}
+{% block content %}
+{% if error_msg %}
+    <p>{{ error_msg }}</p>
+{% endif %}
+
+<div class="container-fluid">
+    <div id="formTitle">Search Results: </div>
+
+    <ol>
+
+    {% for restaurant in orderedRestaurants %}
+        
+        {% if restaurantObjs[restaurant] %}
+            <li>
+                <i><a href="{{ url_for('main.restaurant_reviews', restaurant=restaurant) }}">{{ restaurant }}</a></i>
+                <ul>
+                <li>Average Romance: <strong>{{ restaurantObjs[restaurant].averageRomance }}</strong></li>
+                <li>Average Price: <strong>{{ restaurantObjs[restaurant].averagePrice }}</strong></li>
+                <li>Average Recomendation: <strong>{{ restaurantObjs[restaurant].averageRecommend }}%</strong></li>
+                <li>Most Common Occasion: <strong>{{ restaurantObjs[restaurant].averageOccasion }}</strong></li>
+                </ul>
+            </li>
+        {% else %}
+            <li>
+                <i><a href="{{ url_for('main.restaurant_reviews', restaurant=restaurant) }}">{{ restaurant }}</a></i>
+                <ul>
+                <li>Average Romance: No reviews yet</li>
+                <li>Average Price: No reviews yet</li>
+                <li>Average Recomendation: No reviews yet</strong></li>
+                <li>Most Common Occasion: No reviews yet</strong></li>
+                </ul>
+            </li>
+
+        {% endif %}
+        
+    {% endfor %}
+
+    </ol>
+</div>
+
+{% endblock %}

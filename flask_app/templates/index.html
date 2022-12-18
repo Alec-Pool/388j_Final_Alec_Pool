@@ -1,0 +1,42 @@
+{% extends "header.html" %}
+{% block content %}
+
+
+    <div>
+    <h1><u>Welcome to <span id="sub-title">Couple's Picks</span> Where You Will
+    Find The Perfect Restaraunt For Your Date!</u></h1>
+    </div>
+
+    <hr>
+    <br>
+    <h2 id="random"><u>About:</u></h2>
+    <ul>
+        <li>Created by Alec Pool</li>
+        <li>This is a blog where couples help one another find the perfect restaraunt for their date!</li>
+        <li>As of now, the site's primary focus is restaraunts in Washington DC, but any restaurant can be reviewed</li>
+    </ul>
+
+    <hr>
+    <br>
+    <h2 id="random"><u>How to get started:</u></h2>
+
+    <ol>
+        <li><a href="{{ url_for('user.login') }}">Login</a> or <a href="{{ url_for('user.register') }}">Register</a> for an account</li>
+        <li><a href="{{ url_for('main.search') }}">Search</a> a restaraunt in DC that you want to leave a review or want to see reviews of</li>
+        <li>Leave your review or see what other people have said about the restaraunt</li>
+    </ol>
+    <br>
+    <h2><u>What else you can do:</u></h2>
+    <ul>
+        <li>View other people's profiles to see what restaraunts they have reviewed</li>
+        <li>Search for restaurants in DC of certain qualities (romance, occasion, price)</li>
+        <li>Access and modify your own profile</li>
+    </ul>
+
+    <br>
+
+    <h1><a href="{{ url_for('main.search') }}">Let's Get Searching!</a></h1>
+    
+
+
+{% endblock %}

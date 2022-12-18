@@ -1,0 +1,83 @@
+{% extends "header.html" %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div id="formTitle">Your Account</div>
+    </div>
+</div>
+
+        Username: {{current_user.username}} <br>
+        Email: {{current_user.email}}
+        <hr>
+       
+        <div>
+        <form action="" method="post">
+            {{ username_form.csrf_token }}
+            <div class="form-inline">
+                {{ username_form.username.label(class="form-control-label") }}
+                &nbsp&nbsp{{ username_form.username(class="form-control form-control-lg") }}
+                {% if username_form.username.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {% for error in username_form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {{ username_form.submit(class="btn ml-3 mt-3 btn-outline-info bg-light") }}
+            </div>
+        </form>
+        </div>
+        <div>
+        <form action="" method="post">
+            {{ email_form.csrf_token }}
+            <div class="form-inline">
+                {{ email_form.email.label(class="form-control-label") }}
+                &nbsp&nbsp{{ email_form.email(class="form-control form-control-lg") }}
+                {% if email_form.email.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {% for error in email_form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {{ email_form.submit(class="btn ml-3 mt-3 btn-outline-info bg-light") }}
+            </div>
+        </form>
+   
+</div>
+<hr>
+<br>
+        <h1> You have made {{ reviews.count() }} reviews:</h1>
+        <ul class="media-list">
+            {% for review in reviews %}
+            <li class="media review-item">
+                <div class="media-body">
+                    <span class="float-right">
+                        <small>{{ review.date }}</small>
+                    </span>
+                    <strong>For: <a href="{{ url_for('main.restaurant_reviews', restaurant=review.restaurant_details) }}">
+                            {{ review.restaurant_details }}
+                        </a>
+                    </strong>
+                    <p>
+                        Romance: {{ review.romance }}
+                        <br>
+            
+                        Price: {{ review.price }}
+                        <br>
+
+                        How likely to recommend: {{ review.recommend }}%
+                        <br>
+            
+                        General Comments: {{ review.content }}
+                    </p>
+
+                    
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+   
+{% endblock %}>

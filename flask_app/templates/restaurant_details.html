@@ -1,0 +1,137 @@
+{% extends "header.html" %}
+{% block content %}
+
+{% if error_msg %}
+<b>{{ error_msg }}</b>
+{% endif %}
+
+<div id="formTitle">Restaurant Info</div>
+
+{% if restaurant %}
+
+<div class="row">
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        <h2>{{ restaurant.restaurant_details }}</h2>
+      </div>
+      <ul>
+        <li>Average Romance: <strong>{{ restaurant.averageRomance }}</strong></li>
+        <li>Average Price: <strong>{{ restaurant.averagePrice }}</strong></li>
+        <li>Average Recomendation: <strong>{{ restaurant.averageRecommend }}%</strong></li>
+        <li>Most Common Occasion: <strong>{{ restaurant.averageOccasion }}</strong></li>
+      </ul>
+      
+      
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="row">
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        {{ restaurantDetatils }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{# Reviews #}
+<div class="row">
+  <div class="col-md-12">
+    <br>
+    <h1> {{ reviews|length }} Reviews </h1>
+    <ul class="media-list">
+      {% for review in reviews %}
+      <li class="media review-item">
+        <div class="media-body">
+          <span class="float-right">
+            <small>{{ review.date }}</small>
+          </span>
+          <a href="{{ url_for('main.user_detail', username=review.commenter.username) }}">
+            <strong>@{{ review.commenter.username }}</strong>
+          </a>
+          <p>
+            Romance: {{ review.romance }}
+            <br>
+
+            Occasion: {{ review.occasion }}
+            <br>
+
+            Price: {{ review.price }}
+            <br>
+
+            How likely to recommend: {{ review.recommend }}%
+            <br>
+
+            General Comments: {{ review.content }}
+            
+            
+          </p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% if current_user.is_authenticated %}
+{# Movie review submission form #}
+<div class="row">
+  <div class="col">
+    <form method="POST" action="">
+      {{ form.csrf_token }}
+
+
+      <div class="form-group">
+
+        <div class="form-inline">
+        {{ form.romance.label }} 
+        &nbsp&nbsp {{ form.romance(class="form-control") }}
+        </div>
+        <br>
+
+        <div class="form-inline">
+        {{ form.occasion.label }} 
+        &nbsp&nbsp {{ form.occasion(class="form-control") }}
+        </div>
+        <br>
+
+        <div class="form-inline">
+          {{ form.price.label }} 
+          &nbsp&nbsp 1 {{ form.price(class="form-control", min='1', max='4') }} 4
+          </div>
+          <br>
+
+          <div class="form-inline">
+            {{ form.recommend.label }} 
+            &nbsp&nbsp 0% {{ form.recommend(class="form-control", min='0', max='100') }} 100%
+            </div>
+            <br>
+
+        {{ form.text.label }}
+        {{ form.text(class="form-control") }}
+
+        {% if form.text.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in form.text.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+        
+        
+
+      </div>
+      {{ form.submit() }}
+    </form>
+  </div>
+</div>
+{% endif %}
+
+
+
+{% endblock content %}

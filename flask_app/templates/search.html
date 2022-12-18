@@ -1,0 +1,110 @@
+{% extends "header.html" %}
+{% block content %}
+
+
+    
+    <div id="formTitle">Search for a Restaurant!</div>
+
+    <br>
+    <u><h2>Search For Restaurant By Name and Location:</h2></u>
+    <form action="/restaurants/search" method="POST">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {{ nameForm.csrf_token }}
+        {{ nameForm.search_query(class="form-control form-control-lg mt-5 mb-3", placeholder="Restaurant name and other info") }}
+
+        {% if nameForm.search_query.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in nameForm.search_query.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {{ nameForm.location(class="form-control form-control-lg mt-5 mb-3", placeholder="Restaurant location") }}
+
+        {% if nameForm.location.errors %}
+        <div class="alert alert-warning" role="alert">
+            {% for error in nameForm.location.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {{ nameForm.submit(class="btn ml-5 mt-1 btn-outline-info bg-light") }}
+
+        
+    </form>
+    <br>
+    <br>
+
+    <hr>
+
+    <u><h2>Search For Restaurant With These Qualities:</h2></u>
+    <form method="POST" action="/restaurants/search">
+        {{ attributeForm.csrf_token }}
+  
+  
+        <div class="form-group">
+  
+            <div class="form-inline">
+            {{ attributeForm.romance.label }} 
+            &nbsp&nbsp {{ attributeForm.romance(class="form-control") }}
+            </div>
+            {% if attributeForm.romance.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {% for error in attributeForm.romance.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <br>
+
+            
+    
+            <div class="form-inline">
+            {{ attributeForm.occasion.label }} 
+            &nbsp&nbsp {{ attributeForm.occasion(class="form-control") }}
+            </div>
+            
+            {% if attributeForm.occasion.errors %}
+            <div class="alert alert-warning" role="alert">
+                {% for error in attributeForm.occasion.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <br>
+
+
+    
+            <div class="form-inline">
+                {{ attributeForm.price.label }} 
+                &nbsp&nbsp 1 {{ attributeForm.price(class="form-control", min='1', max='4') }} 4
+            </div>
+            {% if attributeForm.price.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {% for error in attributeForm.price.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+        </div>
+        {{ attributeForm.submit(class="btn ml-5  btn-outline-info bg-light") }}
+        
+
+      </form>
+
+    
+
+{% endblock %}
